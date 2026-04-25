@@ -2,12 +2,12 @@
   "name": "claude",
   "version": "1.0.0",
   "type": "module",
-  "main": "push-cc-cat.mjs",
+  "main": "push-cat.mjs",
   "scripts": {
-    "push-cat": "node push-cc-cat.mjs"
+    "push-cat": "node push-cat.mjs"
   },
   "bin": {
-    "push-cat": "./push-cc-cat.mjs"
+    "push-cat": "./push-cat.mjs"
   },
   "keywords": [],
   "author": "",

@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Что это
 
-push-cat или push-cc-cat (Claude Code Catalog) -- каталог skills, commands и глобального CLAUDE.md для Claude Code. Основная работа -- создание и редактирование контента в `config/`. Утилита `push-cc-cat.mjs` синхронизирует каталог в `~/.claude/`.
+push-cat (Claude Code Catalog) -- каталог skills, commands и глобального CLAUDE.md для Claude Code. Основная работа -- создание и редактирование контента в `config/`. Утилита `push-cat.mjs` синхронизирует каталог в `~/.claude/`.
 
 ## Запуск
 
 ```
-node push-cc-cat.mjs
+node push-cat.mjs
 ```
 
 или через npm:
@@ -22,7 +22,7 @@ npm run push-cat
 
 ## Структура
 
-- `push-cc-cat.mjs` -- единственный исполняемый файл, весь код в нём
+- `push-cat.mjs` -- единственный исполняемый файл, весь код в нём
 - `config/CLAUDE-GLOBAL.md` -- источник для `~/.claude/CLAUDE.md`
 - `config/skills/<группа>/<имя-скилла>/SKILL.md` -- скиллы, вложенность произвольная, при синхронизации выравниваются в плоскую структуру `~/.claude/skills/<имя-скилла>/`
 - `config/commands/<группа>/<имя>.md` -- команды, аналогично выравниваются в `~/.claude/commands/<имя>/`

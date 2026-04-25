@@ -370,7 +370,7 @@ async function main() {
   const claudeHome = getClaudeHome();
 
   console.log();
-  console.log(chalk.bold('=^._.^= push-cc-cat — Push Claude Code Catalog'));
+  console.log(chalk.bold('=^._.^= push-cat — Push Claude Code Catalog'));
   console.log(chalk.dim('─'.repeat(40)));
   info(`OS: ${os.platform()} (${os.arch()})`);
   info(`Home: ${os.homedir()}`);

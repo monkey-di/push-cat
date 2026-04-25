@@ -4,7 +4,7 @@ description: "Validate SKILL.md descriptions against the directive activation te
 
 # /context-eng:validate-skills
 
-Validate all SKILL.md files in the project (or in `config/skills/` if this is the push-cc-cat catalog) against the directive description format that ensures reliable skill activation.
+Validate all SKILL.md files in the project (or in `config/skills/` if this is the push-cat catalog) against the directive description format that ensures reliable skill activation.
 
 ## Required format
 
