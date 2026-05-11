@@ -1,0 +1,9 @@
+{
+  "name": "bitrix-cdd",
+  "description": "BitrixCdd: анализ ТЗ под config-driven data modeling и реализация страниц из вёрстки. Применим только в проектах с библиотекой BitrixCdd.",
+  "version": "1.0.0",
+  "author": { "name": "monkey-di" },
+  "homepage": "https://github.com/monkey-di/push-cat",
+  "repository": "https://github.com/monkey-di/push-cat",
+  "license": "MIT"
+}

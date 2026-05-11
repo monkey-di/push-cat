@@ -1,0 +1,9 @@
+{
+  "name": "php",
+  "description": "PHP 8+: дизайн классов, паттерны, производительность, безопасность, тестирование (PHPUnit), общий reference.",
+  "version": "1.0.0",
+  "author": { "name": "monkey-di" },
+  "homepage": "https://github.com/monkey-di/push-cat",
+  "repository": "https://github.com/monkey-di/push-cat",
+  "license": "MIT"
+}

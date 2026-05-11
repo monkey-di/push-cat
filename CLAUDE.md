@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Что это
 
-push-cat (Claude Code Catalog) -- каталог skills, commands и глобального CLAUDE.md для Claude Code. Основная работа -- создание и редактирование контента в `config/`. Утилита `push-cat.mjs` синхронизирует каталог в `~/.claude/`.
+push-cat -- одновременно marketplace плагинов Claude Code и каталог личных skills/commands/CLAUDE.md. Содержимое лежит в `plugins/` (публикуемые namespaced плагины) и `standalone/` (личная плоская часть). Утилита `push-cat.mjs` синхронизирует standalone-часть в `~/.claude/` и регенерирует `marketplace.json` из манифестов плагинов.
 
 ## Запуск
 
@@ -18,14 +18,19 @@ node push-cat.mjs
 npm run push-cat
 ```
 
-Интерактивный CLI: предлагает выбрать что синхронизировать (CLAUDE.md, skills, commands), обрабатывает конфликты.
+Интерактивный CLI: четыре режима — CLAUDE.md, standalone skills, standalone commands, регенерация marketplace.json.
 
 ## Структура
 
 - `push-cat.mjs` -- единственный исполняемый файл, весь код в нём
-- `config/CLAUDE-GLOBAL.md` -- источник для `~/.claude/CLAUDE.md`
-- `config/skills/<группа>/<имя-скилла>/SKILL.md` -- скиллы, вложенность произвольная, при синхронизации выравниваются в плоскую структуру `~/.claude/skills/<имя-скилла>/`
-- `config/commands/<группа>/<имя>.md` -- команды, аналогично выравниваются в `~/.claude/commands/<имя>/`
+- `.claude-plugin/marketplace.json` -- автогенерится из `plugins/*/.claude-plugin/plugin.json`, в репо коммитится
+- `plugins/<name>/.claude-plugin/plugin.json` -- манифест плагина (`name`, `description`, `version`, `author`)
+- `plugins/<name>/skills/<skill>/SKILL.md` -- скиллы плагина, доступны как `/<name>:<skill>`
+- `plugins/<name>/commands/<cmd>.md` -- команды плагина, доступны как `/<name>:<cmd>`
+- `standalone/CLAUDE-GLOBAL.md` -- источник для `~/.claude/CLAUDE.md`
+- `standalone/skills/<имя>/SKILL.md` -- личные скиллы, копируются в `~/.claude/skills/<имя>/`
+- `standalone/commands/<имя>/*.md` -- личные команды, копируются в `~/.claude/commands/<имя>/`
+- `config/profile/` -- личные референсы, вне синка
 
 ## Стек
 
@@ -33,6 +38,6 @@ Node.js ESM (`"type": "module"`). Зависимости: `@inquirer/prompts` (�
 
 ## Особенности
 
-- Skills определяются по наличию `SKILL.md` в папке, commands -- по наличию любого `.md`
-- Вложенные папки в `~/.claude/skills/` и `~/.claude/commands/` не поддерживаются Claude Code, поэтому скрипт выполняет flattening при копировании
-- Содержимое `config/` -- markdown-файлы со специфичным для Claude Code frontmatter (`description`, `allowed-tools`, `arguments` и т.д.)
+- Внутри плагина skills/commands не поддерживают вложенность — структура плоская
+- Регенерация `marketplace.json` обязательна после добавления плагина или изменения версии/описания: `npm run push-cat` → отметить Marketplace
+- Контент -- markdown со специфичным для Claude Code frontmatter (`description`, `allowed-tools`, `arguments` и т.д.)

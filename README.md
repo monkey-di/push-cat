@@ -1,52 +1,67 @@
 # push-cat
 
-Каталог skills, slash-команд и глобального `CLAUDE.md` для [Claude Code](https://claude.ai/code) с утилитой синхронизации в `~/.claude/`.
+Каталог skills, slash-команд и глобального `CLAUDE.md` для [Claude Code](https://claude.ai/code). Один репозиторий выполняет две роли:
 
-## Зачем
-
-Claude Code читает skills, commands и глобальные инструкции из `~/.claude/`. Хранить это всё прямо там неудобно: нет версионирования, нет нормальной организации по группам, тяжело шарить между машинами. `push-cat` решает обе задачи: содержимое лежит в `config/` под git, утилита раскладывает его в `~/.claude/`.
-
-## Установка
-
-```bash
-npm install
-```
-
-## Запуск
-
-```bash
-npm run push-cat
-```
-
-или напрямую:
-
-```bash
-node push-cat.mjs
-```
-
-Интерактивный CLI спросит, что синхронизировать (CLAUDE.md, skills, commands), и обработает конфликты с уже существующими файлами в `~/.claude/`.
+- **Плагины** для установки через `/plugin marketplace add monkey-di/push-cat` — namespaced скиллы и команды, ставятся одной командой у любого пользователя.
+- **Standalone-конфиг** для собственного `~/.claude/` — `CLAUDE.md` и личные плоские скиллы/команды, синхронизируются утилитой `push-cat.mjs`.
 
 ## Структура
 
 ```
-config/
-├── CLAUDE-GLOBAL.md          → ~/.claude/CLAUDE.md
-├── skills/
-│   └── <группа>/<имя>/SKILL.md  → ~/.claude/skills/<имя>/SKILL.md
-└── commands/
-    └── <группа>/<имя>.md     → ~/.claude/commands/<имя>/...
+push-cat/
+├── .claude-plugin/
+│   └── marketplace.json          # автогенерится из plugins/
+├── plugins/                       # публикуемая часть
+│   ├── bitrix/                    # /bitrix:agent, /bitrix:component, ...
+│   ├── bitrix-cdd/                # /bitrix-cdd:data-requirements-analyzer, ...
+│   ├── php/                       # /php:class, /php:pattern, ...
+│   ├── context-engineering/       # /context-engineering:decompose, ...
+│   ├── git/                       # /git:clone-here
+│   └── sdlc/                      # /sdlc:1-define-new-task, ...
+├── standalone/                    # личная часть, не публикуется как плагины
+│   ├── CLAUDE-GLOBAL.md           → ~/.claude/CLAUDE.md
+│   ├── skills/<имя>/SKILL.md      → ~/.claude/skills/<имя>/SKILL.md
+│   └── commands/<имя>/*.md        → ~/.claude/commands/<имя>/*.md
+├── config/profile/                # личные референсы, вне синка
+└── push-cat.mjs                   # утилита синка и регенерации marketplace
 ```
 
-- **Skills** определяются по наличию `SKILL.md` в папке.
-- **Commands** -- по наличию любого `.md` в папке.
-- Группы (`bitrix/`, `git/`, `sdlc/` и т.д.) -- организационные, при синхронизации **выравниваются в плоскую структуру**: Claude Code не поддерживает вложенность в `~/.claude/skills/` и `~/.claude/commands/`.
+## Использование как marketplace плагинов
 
-## Как добавить свой skill / command
+```
+/plugin marketplace add monkey-di/push-cat
+/plugin install bitrix@push-cat
+/plugin install php@push-cat
+```
 
-1. Создать папку под нужной группой в `config/skills/` или `config/commands/`.
-2. Положить туда `SKILL.md` (для skill) или `.md`-файлы (для command) с правильным frontmatter (`description`, `allowed-tools`, `arguments` и т.д. -- см. [docs Claude Code](https://docs.claude.com/en/docs/claude-code)).
-3. Запустить `npm run push-cat`.
+Доступные плагины (см. `marketplace.json`): `bitrix`, `bitrix-cdd`, `php`, `context-engineering`, `git`, `sdlc`. Каждый плагин даёт namespaced слэш-команды, например `/bitrix:iblock`, `/sdlc:1-define-new-task`.
+
+## Использование как личного синка
+
+```bash
+npm install
+npm run push-cat        # или: node push-cat.mjs
+```
+
+Интерактивный CLI спросит, что синхронизировать:
+
+1. **CLAUDE.md** — `standalone/CLAUDE-GLOBAL.md` → `~/.claude/CLAUDE.md` (с разрешением конфликтов).
+2. **Standalone skills** — папки из `standalone/skills/` копируются в `~/.claude/skills/` плоско.
+3. **Standalone commands** — папки из `standalone/commands/` копируются в `~/.claude/commands/` плоско.
+4. **Marketplace** — регенерация `.claude-plugin/marketplace.json` из манифестов в `plugins/*/.claude-plugin/plugin.json`. Запускать после добавления нового плагина или изменения версии/описания.
+
+## Добавить новый плагин
+
+1. Создать `plugins/<name>/.claude-plugin/plugin.json` (поля: `name`, `description`, `version`, `author`).
+2. Положить скиллы в `plugins/<name>/skills/<skill-name>/SKILL.md` и/или команды в `plugins/<name>/commands/<cmd>.md`.
+3. Запустить `npm run push-cat` и отметить **Marketplace** — он перепишет `marketplace.json`.
+4. Закоммитить и запушить — пользователи получат новый плагин.
+
+## Добавить личный (standalone) skill или command
+
+1. Положить в `standalone/skills/<имя>/SKILL.md` или `standalone/commands/<имя>/*.md`.
+2. Запустить `npm run push-cat`, отметить нужный раздел.
 
 ## Стек
 
-Node.js ESM. Зависимости: `@inquirer/prompts`, `chalk`. Без сборки, тестов и линтера -- весь код в `push-cat.mjs`.
+Node.js ESM. Зависимости: `@inquirer/prompts`, `chalk`. Без сборки, тестов и линтера — весь код в `push-cat.mjs`.

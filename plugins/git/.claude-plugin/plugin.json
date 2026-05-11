@@ -1,0 +1,9 @@
+{
+  "name": "git",
+  "description": "Git helpers: клонирование репозитория в непустой каталог и другие операции с git.",
+  "version": "1.0.0",
+  "author": { "name": "monkey-di" },
+  "homepage": "https://github.com/monkey-di/push-cat",
+  "repository": "https://github.com/monkey-di/push-cat",
+  "license": "MIT"
+}

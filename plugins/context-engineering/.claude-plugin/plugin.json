@@ -1,0 +1,9 @@
+{
+  "name": "context-engineering",
+  "description": "Context engineering: декомпозиция эпиков, валидация SKILL.md, постмортемы, инициализация CLAUDE.md.",
+  "version": "1.0.0",
+  "author": { "name": "monkey-di" },
+  "homepage": "https://github.com/monkey-di/push-cat",
+  "repository": "https://github.com/monkey-di/push-cat",
+  "license": "MIT"
+}

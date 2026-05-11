@@ -1,0 +1,44 @@
+{
+  "name": "push-cat",
+  "owner": {
+    "name": "monkey-di"
+  },
+  "plugins": [
+    {
+      "name": "bitrix",
+      "source": "./plugins/bitrix",
+      "description": "Скиллы по Bitrix D7: компоненты, агенты, события, инфоблоки, модули, ORM, REST, общий reference.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "bitrix-cdd",
+      "source": "./plugins/bitrix-cdd",
+      "description": "BitrixCdd: анализ ТЗ под config-driven data modeling и реализация страниц из вёрстки. Применим только в проектах с библиотекой BitrixCdd.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "context-engineering",
+      "source": "./plugins/context-engineering",
+      "description": "Context engineering: декомпозиция эпиков, валидация SKILL.md, постмортемы, инициализация CLAUDE.md.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "git",
+      "source": "./plugins/git",
+      "description": "Git helpers: клонирование репозитория в непустой каталог и другие операции с git.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "php",
+      "source": "./plugins/php",
+      "description": "PHP 8+: дизайн классов, паттерны, производительность, безопасность, тестирование (PHPUnit), общий reference.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sdlc",
+      "source": "./plugins/sdlc",
+      "description": "SDLC workflow: анализ требований, планирование реализации, имплементация фичи по плану.",
+      "version": "1.0.0"
+    }
+  ]
+}

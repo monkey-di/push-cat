@@ -1,0 +1,9 @@
+{
+  "name": "bitrix",
+  "description": "Скиллы по Bitrix D7: компоненты, агенты, события, инфоблоки, модули, ORM, REST, общий reference.",
+  "version": "1.0.0",
+  "author": { "name": "monkey-di" },
+  "homepage": "https://github.com/monkey-di/push-cat",
+  "repository": "https://github.com/monkey-di/push-cat",
+  "license": "MIT"
+}
