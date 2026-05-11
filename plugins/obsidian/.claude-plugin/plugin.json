@@ -1,0 +1,9 @@
+{
+  "name": "obsidian",
+  "description": "Работа с Obsidian-хранилищем: OFM-синтаксис, заголовки-утверждения по Evergreen Notes, содержательное качество заметок, операции над хранилищем (конспекты из транскрипта, разбор инбокса, исследование, обновление MOC).",
+  "version": "1.0.0",
+  "author": { "name": "monkey-di" },
+  "homepage": "https://github.com/monkey-di/push-cat",
+  "repository": "https://github.com/monkey-di/push-cat",
+  "license": "MIT"
+}

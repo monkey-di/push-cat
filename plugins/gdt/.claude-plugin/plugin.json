@@ -1,0 +1,9 @@
+{
+  "name": "gdt",
+  "description": "Getting Things Done: дневные и недельные обзоры, синтез прогресса и планирование.",
+  "version": "1.0.0",
+  "author": { "name": "monkey-di" },
+  "homepage": "https://github.com/monkey-di/push-cat",
+  "repository": "https://github.com/monkey-di/push-cat",
+  "license": "MIT"
+}

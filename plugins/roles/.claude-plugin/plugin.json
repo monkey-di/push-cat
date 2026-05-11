@@ -1,0 +1,9 @@
+{
+  "name": "roles",
+  "description": "Персоны для разных режимов диалога: собеседник для совместного мышления и другие роли.",
+  "version": "1.0.0",
+  "author": { "name": "monkey-di" },
+  "homepage": "https://github.com/monkey-di/push-cat",
+  "repository": "https://github.com/monkey-di/push-cat",
+  "license": "MIT"
+}
