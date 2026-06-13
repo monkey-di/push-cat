@@ -31,6 +31,7 @@ npm run push-cat
 - `standalone/skills/<имя>/SKILL.md` -- личные скиллы, копируются в `~/.claude/skills/<имя>/`
 - `standalone/commands/<имя>/*.md` -- личные команды, копируются в `~/.claude/commands/<имя>/`
 - `config/profile/` -- личные референсы, вне синка
+- `shared/<имя>.md` -- общие фрагменты для include, вне синка; подставляются в `.md` по маркеру `<!-- include: <имя> -->`
 
 ## Стек
 
@@ -41,3 +42,4 @@ Node.js ESM (`"type": "module"`). Зависимости: `@inquirer/prompts` (�
 - Внутри плагина skills/commands не поддерживают вложенность — структура плоская
 - Регенерация `marketplace.json` обязательна после добавления плагина или изменения версии/описания: `npm run push-cat` → отметить Marketplace
 - Контент -- markdown со специфичным для Claude Code frontmatter (`description`, `allowed-tools`, `arguments` и т.д.)
+- Include-склейка: маркер `<!-- include: <имя> -->` в любом `.md` при синхронизации заменяется содержимым `shared/<имя>.md` (функция `expandIncludes` в `push-cat.mjs`, висит на `copyDirSync` и `syncClaudeMd`). DRY-источник в `shared/`, в `~/.claude` уезжает собранный файл. Пример: общая преамбула ролевых масок в `shared/preamble.md`, маски подключают её маркером

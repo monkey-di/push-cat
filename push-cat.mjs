@@ -30,12 +30,35 @@ function copyDirSync(src, dest) {
     const s = path.join(src, entry.name);
     const d = path.join(dest, entry.name);
     if (entry.isDirectory()) copyDirSync(s, d);
+    else if (entry.name.endsWith('.md')) {
+      fs.writeFileSync(d, expandIncludes(fs.readFileSync(s, 'utf-8'), s), 'utf-8');
+    }
     else fs.copyFileSync(s, d);
   }
 }
 
 function rmDirSync(p) {
   if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true });
+}
+
+// ── Includes (build-time склейка общих фрагментов) ───────────────────
+// В .md-файлах маркер `<!-- include: имя -->` при синхронизации заменяется
+// содержимым shared/имя.md. Источник остаётся DRY (маркер), а в ~/.claude
+// попадает уже собранный файл — без рантайм-чтений и потери recency.
+
+const INCLUDES_DIR = path.join(REPO_ROOT, 'shared');
+const INCLUDE_RE = /<!--\s*include:\s*([^\s>]+?)\s*-->/g;
+
+function expandIncludes(content, srcFile) {
+  return content.replace(INCLUDE_RE, (match, name) => {
+    const file = name.endsWith('.md') ? name : `${name}.md`;
+    const incPath = path.join(INCLUDES_DIR, file);
+    if (!fs.existsSync(incPath)) {
+      warn(`include не найден: shared/${file} (в ${path.relative(REPO_ROOT, srcFile)}) — маркер оставлен`);
+      return match;
+    }
+    return fs.readFileSync(incPath, 'utf-8').trimEnd();
+  });
 }
 
 // ── 1) CLAUDE.md sync ────────────────────────────────────────────────
@@ -49,7 +72,7 @@ async function syncClaudeMd() {
     return;
   }
 
-  const srcContent = fs.readFileSync(src, 'utf-8');
+  const srcContent = expandIncludes(fs.readFileSync(src, 'utf-8'), src);
 
   console.log();
   info(`Источник:   ${src}`);
